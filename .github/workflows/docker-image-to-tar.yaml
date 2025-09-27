@@ -10,9 +10,9 @@ jobs:
   release:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: read
-      packages: write # 必须！用于推送 GHCR
+    # permissions:
+    #   contents: read
+    #   packages: write # 必须！用于推送 GHCR
 
     steps:
       - name: Checkout code

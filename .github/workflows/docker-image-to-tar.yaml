@@ -27,17 +27,17 @@ jobs:
           context: .
           file: ./Dockerfile
           load: true          # 构建后加载到本地 Docker daemon
-          tags: ${{ IMAGE_NAME }}:${{ env.TAG }}
+          tags: ${{ env.IMAGE_NAME }}:${{ env.TAG }}
 
       - name: Save Docker image as tar
         run: |
-          docker save ${{ IMAGE_NAME }}:${{ env.TAG }} -o ${{ IMAGE_NAME }}-${{ env.TAG }}.tar
-          ls -lh ${{ IMAGE_NAME }}-${{ env.TAG }}.tar
+          docker save ${{ env.IMAGE_NAME }}:${{ env.TAG }} -o ${{ env.IMAGE_NAME }}-${{ env.TAG }}.tar
+          ls -lh ${{ env.IMAGE_NAME }}-${{ env.TAG }}.tar
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{ IMAGE_NAME }}-${{ env.TAG }}.tar
+          files: ${{ env.IMAGE_NAME }}-${{ env.TAG }}.tar
           token: ${{ secrets.GITHUB_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

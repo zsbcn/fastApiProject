@@ -4,8 +4,9 @@ on:
   push:
     tags:
       - 'v*'  # 只在打 tag 时触发，如 v1.0.0
-env: 
+env:
   IMAGE_NAME: python3.11-trixie-slim-uv-chrome # 一般可使用 ${{ github.repository }}
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -14,23 +15,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # - name: Set tag name
-      #   id: get_tag
-      #   run: echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+      - name: Set tag name
+        id: get_tag
+        run: echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
-      # - name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      # - name: Build Docker image
-      #   uses: docker/build-push-action@v6
-      #   with:
-      #     context: .
-      #     file: ./Dockerfile
-      #     load: true          # 构建后加载到本地 Docker daemon
-      #     tags: ${{ env.IMAGE_NAME }}:${{ env.TAG }}
-      - name: Build Docker Image
-        run: docker build . --file Dockerfile --tag ${{ env.Image_NAME}}-${{ env.TAG }}
-        
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          load: true          # 构建后加载到本地 Docker daemon
+          tags: ${{ env.IMAGE_NAME }}:${{ env.TAG }}
+        #      - name: Build Docker Image
+        #        run: docker build . --file Dockerfile --tag ${{ env.Image_NAME}}-${{ env.TAG }}
+
       - name: Save Docker image as tar
         run: |
           docker save ${{ env.IMAGE_NAME }}:${{ env.TAG }} -o ${{ env.IMAGE_NAME }}-${{ env.TAG }}.tar

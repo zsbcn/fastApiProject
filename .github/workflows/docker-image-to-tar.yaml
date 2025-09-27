@@ -32,7 +32,7 @@ jobs:
 #          load: true          # 构建后加载到本地 Docker daemon
 #          tags: ${{ env.IMAGE_NAME }}:${{ env.TAG }}
       - name: Build Docker Image
-        run: docker build . --file Dockerfile --tag ${{ env.Image_NAME}}-${{ env.TAG }}
+        run: docker build . --file Dockerfile --tag ${{ env.Image_NAME}}:${{ env.TAG }}
 
       - name: Save Docker image as tar
         run: |

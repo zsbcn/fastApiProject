@@ -18,19 +18,15 @@ RUN apt-get update && apt-get install -y \
     libdrm2 \
     fonts-liberation \
     ca-certificates \
-    && rm -rf /var/lib/apt/lists/* \
+    unzip \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN useradd --create-home --shell /bin/bash app
-USER app
-WORKDIR /home/app
+WORKDIR /home
+RUN curl -O https://cdn.npmmirror.com/binaries/chrome-for-testing/142.0.7436.0/linux64/chrome-linux64.zip && \
+    unzip chrome-linux64.zip && \
+    mv chrome-linux64 chrome && \
+    rm chrome-linux64.zip
 
-COPY chrome-linux64 chrome
-COPY app.py pyproject.toml ./
-
-ENV PATH=$PATH:/home/app/chrome \
+ENV PATH=$PATH:/home/chrome \
     PYTHONDONTWRITEBYTECODE=1
-RUN uv sync
-
-EXPOSE 8000
-
-ENTRYPOINT [ "uv", "run", "litestar", "run", "--host", "0.0.0.0"]

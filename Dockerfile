@@ -3,7 +3,7 @@ FROM ghcr.io/astral-sh/uv:python3.11-trixie-slim
 WORKDIR /home
 
 RUN apt-get update && \
-    apt-get install -y \
+    apt-get install -y --no-install-recommends\
             libnss3 \
             libnspr4 \
             libglib2.0-0 \

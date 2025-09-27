@@ -2,9 +2,9 @@ name: Build Docker Image and Release as TAR
 
 on:
   workflow_dispatch:
-   push:
-     tags:
-       - 'v*'  # 只在打 tag 时触发，如 v1.0.0
+  push:
+    tags:
+      - 'v*'  # 只在打 tag 时触发，如 v1.0.0
 env:
   IMAGE_NAME: python3.11-trixie-slim-uv-chrome # 一般可使用 ${{ github.repository }}
 #  TAG: v1.0.2
